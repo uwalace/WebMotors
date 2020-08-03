@@ -1,0 +1,61 @@
+﻿@model WebMotors.App.Models.Domain.Anuncio
+@{
+	ViewData["Title"] = "Anuncio";
+}
+
+<h1>Apagar Anuncio</h1>
+<br />
+<h3>Esta certo que deseja apagar este anuncio?</h3>
+<div>
+	<hr />
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.ID)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.ID)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Marca)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Marca)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Modelo)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Modelo)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Versao)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Versao)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Quilometragem)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Quilometragem)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Ano)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Ano)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Observacao)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Observacao)
+		</dd>
+	</dl>
+
+	<form asp-action="Delete">
+		<input type="hidden" asp-for="ID" />
+		<input type="submit" value="Delete" class="btn btn-danger" /> |
+		<a asp-action="Index" class="btn btn-default">Voltar</a>
+	</form>
+</div>

@@ -1,0 +1,92 @@
+﻿@model WebMotors.App.Models.ViewModels.AnuncioViewModel
+@{
+	ViewData["Title"] = "Anuncio";
+}
+	<h1>Alteração de Anuncio</h1>
+<hr />
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Edit">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>			
+			<div class="form-group">
+				<label asp-for="Anuncio.ID" class="control-label"></label>
+				<input readonly asp-for="Anuncio.ID" class="form-control" />
+				<span asp-validation-for="Anuncio.ID" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Anuncio.Marca" class="control-label"></label>
+				<select id="ddlMarca" asp-for="Anuncio.Marca" required asp-items="@(new SelectList(Model.Makes,"ID","Name"))" class="form-control">
+					<option selected="selected" value="">Selecione</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label asp-for="Anuncio.Modelo" class="control-label"></label>
+				<select id="ddlModelo" asp-for="Anuncio.Modelo" required asp-items="@(new SelectList(string.Empty ,"ID","Name"))" class="form-control">
+					<option selected="selected" value="">Selecione</option>
+				</select>
+				<span asp-validation-for="Anuncio.Modelo" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Anuncio.Versao" class="control-label"></label>
+				<select id="ddlVersion" asp-for="Anuncio.Versao" required asp-items="@(new SelectList(string.Empty,"ID","Name"))" class="form-control">
+					<option selected="selected" value="">Selecione</option>
+				</select>
+				<span asp-validation-for="Anuncio.Versao" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Anuncio.Ano" class="control-label"></label>
+				<input asp-for="Anuncio.Ano" class="form-control" />
+				<span asp-validation-for="Anuncio.Ano" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Anuncio.Quilometragem" class="control-label"></label>
+				<input asp-for="Anuncio.Quilometragem" class="form-control" />
+				<span asp-validation-for="Anuncio.Quilometragem" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Anuncio.Observacao" class="control-label"></label>
+				<textarea asp-for="Anuncio.Observacao" rows="5" cols="40" maxlength="200" required class="form-control"></textarea>
+				<span asp-validation-for="Anuncio.Observacao" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Save" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+	<a asp-action="Index" class="btn btn-default">Voltar</a>
+</div>
+<script>
+	$(function () {
+		$("#ddlMarca").change(function () {
+			$.getJSON("/Anuncios/GetModel", { id: $("#ddlMarca").val() }, function (data) {
+				var row = "";
+				$("#ddlModelo").empty();
+				row += "<option value=''>Selecione</option>";
+				$.each(data, function (i, model) {
+					row += "<option value=" + model.id + ">" + model.name + "</option>";
+				});
+				$("#ddlModelo").html(row);
+				$("#ddlVersion").empty();
+				$("#ddlVersion").html("<option value=''>Selecione</option>");
+			})
+		})
+		$("#ddlModelo").change(function () {
+			$.getJSON("/Anuncios/GetVersion", { id: $("#ddlModelo").val() }, function (data) {
+				var row = "";
+				$("#ddlVersion").empty();
+				row += "<option value=''>Selecione</option>";
+				$.each(data, function (i, version) {
+					row += "<option value=" + version.id + ">" + version.name + "</option>";
+				});
+				$("#ddlVersion").html(row);
+			})
+		})
+	})
+</script>
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
